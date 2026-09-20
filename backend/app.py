@@ -10,8 +10,15 @@ app = Flask(
     __name__,
     template_folder=FRONTEND_DIR,
     static_folder=FRONTEND_DIR,
-    static_url_path="/static"
+    static_url_path=""
 )
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    return response
 
 @app.route("/")
 def index():
