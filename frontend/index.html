@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRERAK — Predictive Retention AI | Retention Intelligence Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Compact Left Sidebar / Navigation Area -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                </div>
+                <div class="sidebar-brand-text">
+                    <h1 class="brand-title">PRERAK <span class="brand-sub">— Predictive Retention AI</span></h1>
+                    <span class="badge-chip">CX0701 · AI CORE</span>
+                </div>
+            </div>
+
+            <!-- Navigation Anchors -->
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">INTELLIGENCE SUITE</div>
+                <a href="#overview" class="nav-item active">
+                    <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span>Overview</span>
+                </a>
+                <a href="#risk-intelligence" class="nav-item">
+                    <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    <span>Risk Intelligence</span>
+                </a>
+                <a href="#distribution" class="nav-item">
+                    <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                    <span>Cohort Distribution</span>
+                </a>
+                <a href="#students" class="nav-item">
+                    <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Student Directory</span>
+                </a>
+                <a href="#intervention-lab" class="nav-item" onclick="openStudentModal('STU-2024-01'); return false;">
+                    <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m14 2 4 4L7 17H3v-4L14 2z"/><path d="m18 14 3 3-2 2-3-3"/></svg>
+                    <span>Intervention Lab</span>
+                </a>
+            </nav>
+
+            <!-- Sidebar System Card -->
+            <div class="sidebar-footer">
+                <div class="engine-status-pill">
+                    <span class="pulse-dot"></span>
+                    <div class="engine-status-details">
+                        <span class="engine-name">Risk Engine v2.4</span>
+                        <span class="engine-state">Continuous Multi-Signal</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Column -->
+        <div class="main-wrapper">
+            <!-- Top Command Header -->
+            <header class="top-nav">
+                <div class="top-nav-left">
+                    <div class="command-breadcrumbs">
+                        <span class="crumb-brand">PRERAK</span>
+                        <span class="crumb-divider">/</span>
+                        <span class="crumb-target">Retention Command Center</span>
+                        <span class="command-tag">AI CORE</span>
+                    </div>
+                </div>
+                <div class="header-status" title="Real-time multi-signal monitoring">
+                    <span class="pulse-dot"></span>
+                    <span class="live-tag">LIVE MONITORING</span>
+                    <span class="status-divider">•</span>
+                    <span class="status-label" id="cohortStatusLabel">Active Cohort (18 Students)</span>
+                </div>
+            </header>
+
+            <!-- API Error Alert Banner (Hidden by default) -->
+            <div id="apiErrorBanner" class="api-error-banner" style="display: none;"></div>
+
+            <!-- Main Content Area -->
+            <main class="dashboard-container">
+                <!-- Hero / Retention Intelligence Header -->
+                <section class="retention-hero-banner" id="overview">
+                    <div class="hero-left">
+                        <div class="hero-status-row">
+                            <span class="hero-live-badge"><span class="chip-dot"></span> COHORT ANALYSIS · LIVE</span>
+                            <span class="hero-pipeline-tag">Early Warning Engine Active</span>
+                        </div>
+                        <h2 class="hero-headline">Retention Intelligence</h2>
+                        <p class="hero-subtext">Identify early warning signals, understand student risk, and simulate targeted intervention impact.</p>
+                    </div>
+                    <div class="hero-right">
+                        <div class="hero-metric-tile">
+                            <span class="hero-tile-label">DETECTION MODEL</span>
+                            <span class="hero-tile-val">Continuous Velocity</span>
+                        </div>
+                        <div class="hero-metric-tile">
+                            <span class="hero-tile-label">QUANTIFIED TRIAGE</span>
+                            <span class="hero-tile-val">0–100 Scale</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1. Executive Risk Intelligence KPI Metrics -->
+                <section class="risk-intelligence-section" id="risk-intelligence">
+                    <div class="intelligence-header-row">
+                        <div>
+                            <span class="intel-kicker">EXECUTIVE RETENTION METRICS</span>
+                            <h3 class="intelligence-heading">Cohort Risk Intelligence</h3>
+                        </div>
+                        <div class="intel-timestamp">
+                            <span class="intel-dot"></span> Live Prediction Feed
+                        </div>
+                    </div>
+
+                    <div class="intelligence-metrics-grid">
+                        <!-- Metric 1: Total Students Analyzed -->
+                        <div class="intel-card intel-card-total">
+                            <div class="intel-card-top">
+                                <span class="intel-card-label">TOTAL STUDENTS ANALYZED</span>
+                                <span class="intel-card-icon">👥</span>
+                            </div>
+                            <div class="intel-card-val font-mono" id="intelTotalStudents">--</div>
+                            <div class="intel-card-footer">Complete enrolled cohort dataset</div>
+                            <div class="card-glow-line glow-cyan"></div>
+                        </div>
+
+                        <!-- Metric 2: High-Risk Students (Interactive Clickable Drilldown) -->
+                        <div class="intel-card intel-card-danger clickable-card" onclick="openCategoryModal('HIGH')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryModal('HIGH');}" tabindex="0" role="button" aria-label="View High-Risk Students Drilldown">
+                            <div class="intel-card-top">
+                                <span class="intel-card-label">HIGH-RISK STUDENTS</span>
+                                <span class="drilldown-chip chip-red">Drill down ↗</span>
+                            </div>
+                            <div class="intel-card-val text-red font-mono" id="intelHighRisk">--</div>
+                            <div class="intel-card-footer alert-subtext">Immediate intervention required · Click to view</div>
+                            <div class="card-glow-line glow-red"></div>
+                        </div>
+
+                        <!-- Metric 3: Cohort Average Risk Score -->
+                        <div class="intel-card intel-card-avg">
+                            <div class="intel-card-top">
+                                <span class="intel-card-label">COHORT AVG RISK SCORE</span>
+                                <span class="intel-card-icon">📊</span>
+                            </div>
+                            <div class="intel-card-val font-mono" id="intelAvgScore">--</div>
+                            <div class="intel-card-footer" id="intelAvgSub">Mean 0–100 multi-signal score</div>
+                            <div class="card-glow-line glow-purple"></div>
+                        </div>
+
+                        <!-- Metric 4: Students Requiring Intervention (Interactive Clickable Drilldown) -->
+                        <div class="intel-card intel-card-warning clickable-card" onclick="openCategoryModal('MEDIUM')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryModal('MEDIUM');}" tabindex="0" role="button" aria-label="View Intervention Targets">
+                            <div class="intel-card-top">
+                                <span class="intel-card-label">REQUIRING INTERVENTION</span>
+                                <span class="drilldown-chip chip-amber">Review ↗</span>
+                            </div>
+                            <div class="intel-card-val text-amber font-mono" id="intelInterventionNeeded">--</div>
+                            <div class="intel-card-footer warning-subtext">High + Medium risk action targets · Click to explore</div>
+                            <div class="card-glow-line glow-amber"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Summary Risk Category Tier Cards (Interactive Clickable Drilldowns) -->
+                <section class="metrics-grid" aria-label="Risk Tier Summary">
+                    <!-- High Risk Card -->
+                    <div class="metric-card high-risk-card clickable-card" onclick="openCategoryModal('HIGH')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryModal('HIGH');}" tabindex="0" role="button" aria-label="View High-Risk Students Drilldown">
+                        <div class="metric-header">
+                            <div class="tier-label-group">
+                                <span class="metric-label">High Risk</span>
+                                <span class="tier-range-pill tier-high-pill">Score 70–100</span>
+                            </div>
+                            <span class="drilldown-chip chip-red">Drill down ↗</span>
+                        </div>
+                        <div class="metric-value font-mono" id="highRiskCount">--</div>
+                        <div class="metric-footer">
+                            <span class="trend-text alert-text">Immediate intervention advised · Click to view students</span>
+                        </div>
+                    </div>
+
+                    <!-- Medium Risk Card -->
+                    <div class="metric-card med-risk-card clickable-card" onclick="openCategoryModal('MEDIUM')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryModal('MEDIUM');}" tabindex="0" role="button" aria-label="View Medium-Risk Students Drilldown">
+                        <div class="metric-header">
+                            <div class="tier-label-group">
+                                <span class="metric-label">Medium Risk</span>
+                                <span class="tier-range-pill tier-med-pill">Score 40–69</span>
+                            </div>
+                            <span class="drilldown-chip chip-amber">Drill down ↗</span>
+                        </div>
+                        <div class="metric-value font-mono" id="medRiskCount">--</div>
+                        <div class="metric-footer">
+                            <span class="trend-text warning-text">Needs academic &amp; mentorship check-in · Click to view students</span>
+                        </div>
+                    </div>
+
+                    <!-- Low Risk Card -->
+                    <div class="metric-card low-risk-card clickable-card" onclick="openCategoryModal('LOW')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryModal('LOW');}" tabindex="0" role="button" aria-label="View Low-Risk Students Drilldown">
+                        <div class="metric-header">
+                            <div class="tier-label-group">
+                                <span class="metric-label">Low Risk</span>
+                                <span class="tier-range-pill tier-low-pill">Score 0–39</span>
+                            </div>
+                            <span class="drilldown-chip chip-emerald">Drill down ↗</span>
+                        </div>
+                        <div class="metric-value font-mono" id="lowRiskCount">--</div>
+                        <div class="metric-footer">
+                            <span class="trend-text success-text">Stable attendance &amp; progression · Click to view students</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Cohort Risk Overview: Visual Distribution Insight -->
+                <section class="cohort-overview-card" id="distribution" aria-label="Cohort Risk Overview">
+                    <div class="cohort-overview-header">
+                        <div class="cohort-overview-title-group">
+                            <span class="overview-tag">COHORT DISTRIBUTION MODEL</span>
+                            <h2 class="overview-title">Cohort Risk Overview</h2>
+                            <p class="overview-subtext">Composite student triage spread across high, medium, and low attrition probability thresholds.</p>
+                        </div>
+                        <div class="overview-insight-badge" id="distributionInsight">
+                            <span class="insight-dot"></span>
+                            <span id="distributionInsightText">Calculating intervention targets...</span>
+                        </div>
+                    </div>
+
+                    <!-- Segmented Distribution Bar -->
+                    <div class="segmented-bar-wrapper">
+                        <div class="segmented-bar-track" role="progressbar" aria-label="Cohort risk distribution">
+                            <div id="segBarHigh" class="segmented-bar-fill seg-high" style="width: 0%;" title="High Risk"></div>
+                            <div id="segBarMed" class="segmented-bar-fill seg-med" style="width: 0%;" title="Medium Risk"></div>
+                            <div id="segBarLow" class="segmented-bar-fill seg-low" style="width: 0%;" title="Low Risk"></div>
+                        </div>
+                        <div class="segmented-bar-scale">
+                            <span>0%</span>
+                            <span>25%</span>
+                            <span>50%</span>
+                            <span>75%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+
+                    <!-- Category Legend with Counts and Percentages (Interactive Clickable Drilldowns) -->
+                    <div class="overview-legend-row">
+                        <div class="overview-legend-item tier-item-high clickable-legend-item" onclick="openCategoryModal('HIGH')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryModal('HIGH');}" tabindex="0" role="button" aria-label="View High-Risk Students Drilldown">
+                            <div class="legend-header-line">
+                                <span class="legend-color-dot dot-high"></span>
+                                <span class="legend-label">HIGH RISK</span>
+                                <span class="legend-range">(Score 70–100)</span>
+                                <span class="legend-drill-arrow">↗</span>
+                            </div>
+                            <div class="legend-val font-mono" id="distHighVal">-- (0%)</div>
+                            <div class="legend-note">Immediate intervention priority · Click to drill down</div>
+                        </div>
+                        <div class="overview-legend-item tier-item-med clickable-legend-item" onclick="openCategoryModal('MEDIUM')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryModal('MEDIUM');}" tabindex="0" role="button" aria-label="View Medium-Risk Students Drilldown">
+                            <div class="legend-header-line">
+                                <span class="legend-color-dot dot-med"></span>
+                                <span class="legend-label">MEDIUM RISK</span>
+                                <span class="legend-range">(Score 40–69)</span>
+                                <span class="legend-drill-arrow">↗</span>
+                            </div>
+                            <div class="legend-val font-mono" id="distMedVal">-- (0%)</div>
+                            <div class="legend-note">Mentorship &amp; academic check-in · Click to drill down</div>
+                        </div>
+                        <div class="overview-legend-item tier-item-low clickable-legend-item" onclick="openCategoryModal('LOW')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryModal('LOW');}" tabindex="0" role="button" aria-label="View Low-Risk Students Drilldown">
+                            <div class="legend-header-line">
+                                <span class="legend-color-dot dot-low"></span>
+                                <span class="legend-label">LOW RISK</span>
+                                <span class="legend-range">(Score 0–39)</span>
+                                <span class="legend-drill-arrow">↗</span>
+                            </div>
+                            <div class="legend-val font-mono" id="distLowVal">-- (0%)</div>
+                            <div class="legend-note">Metrics within benchmark parameters · Click to drill down</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Student Directory: Student Risk Monitor -->
+                <section class="table-section" id="students">
+                    <div class="table-header-bar">
+                        <div class="table-title-box">
+                            <span class="table-kicker">REAL-TIME COHORT SURVEILLANCE</span>
+                            <h2 class="section-heading">Student Risk Monitor</h2>
+                            <p class="section-subheading">Live multi-signal dropout velocity monitoring across active cohort. Click any student row to open the AI Student Intelligence Panel.</p>
+                        </div>
+                        <div class="table-action-meta">
+                            <div class="table-hint">
+                                <span class="hint-icon">🔍</span> Click student row to inspect profile
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Student Name</th>
+                                    <th>Department</th>
+                                    <th>Attendance</th>
+                                    <th>CGPA</th>
+                                    <th>Risk Score (0–100)</th>
+                                    <th>Risk Level</th>
+                                    <th>Primary Detected Signal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <tr>
+                                    <td colspan="8" class="table-state-cell">
+                                        <span class="loading-spinner"></span> Loading cohort predictions from API...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Minimal Command Footer -->
+            <footer class="app-footer">
+                <div class="footer-left">
+                    <span class="footer-brand">PRERAK AI</span>
+                    <span class="footer-sep">•</span>
+                    <span class="footer-text">Predictive Student Retention Intelligence Platform · Track CX0701</span>
+                </div>
+                <div class="footer-right">
+                    <span class="footer-tag">AI Retention Command Center</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Risk Category Drilldown Modal (Compact Student List) -->
+    <div id="categoryModal" class="modal-overlay" onclick="handleCategoryBackdropClick(event)">
+        <div class="category-modal-card" role="dialog" aria-modal="true" aria-labelledby="categoryModalTitle">
+            <div class="category-modal-header">
+                <div>
+                    <div class="category-kicker-row">
+                        <span id="categoryKickerBadge" class="category-kicker-badge">RISK CATEGORY DRILLDOWN</span>
+                        <span id="categoryCountBadge" class="category-count-badge font-mono">-- Students</span>
+                    </div>
+                    <h2 id="categoryModalTitle" class="category-modal-title">HIGH-RISK STUDENTS</h2>
+                    <p id="categoryModalSubtitle" class="category-modal-subtitle">Students currently requiring immediate intervention</p>
+                </div>
+                <button type="button" class="modal-close-btn" onclick="closeCategoryModal()" aria-label="Close category list">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="category-modal-body">
+                <div id="categoryStudentsList" class="category-students-list">
+                    <!-- Populated dynamically via JavaScript -->
+                </div>
+            </div>
+
+            <div class="category-modal-footer">
+                <span class="hint-icon">💡</span> Click any student row to open their full AI Student Intelligence Profile &amp; Intervention Simulator
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Detail & Prediction Workflow Modal: AI Student Intelligence Panel -->
+    <div id="studentModal" class="modal-overlay" onclick="handleBackdropClick(event)">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalStudentName">
+            <!-- Modal Header / Identity -->
+            <div class="modal-header">
+                <div class="modal-identity-group">
+                    <div class="modal-student-meta">
+                        <span id="modalStudentId" class="mono-id-badge font-mono">STU-XXXX</span>
+                        <span id="modalDepartment" class="modal-dept">Department</span>
+                        <span class="modal-eval-tag">LIVE EVALUATION</span>
+                    </div>
+                    <h2 id="modalStudentName" class="modal-student-name">Student Name</h2>
+                </div>
+                <div class="modal-header-right">
+                    <div id="modalRiskBadge" class="risk-badge risk-high">
+                        <span id="modalRiskLevel">HIGH</span>
+                        <span id="modalRiskScore" class="modal-score-pill font-mono">-- / 100</span>
+                    </div>
+                    <button type="button" class="modal-close-btn" onclick="closeStudentModal()" aria-label="Close modal">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Error Banner (if API fetch fails) -->
+            <div id="modalError" class="modal-error-banner" style="display: none;"></div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <!-- 3-Stage Prediction Workflow Pipeline Ribbon -->
+                <div class="workflow-ribbon">
+                    <div class="workflow-step active-step step-signal">
+                        <div class="step-num">01</div>
+                        <div class="step-meta">
+                            <span class="step-badge step-badge-signal">STAGE 1</span>
+                            <span class="step-title">DETECTED SIGNALS</span>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">➔</div>
+                    <div class="workflow-step active-step step-risk">
+                        <div class="step-num">02</div>
+                        <div class="step-meta">
+                            <span class="step-badge step-badge-risk">STAGE 2</span>
+                            <span class="step-title">RISK SCORE &amp; LEVEL</span>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">➔</div>
+                    <div class="workflow-step active-step step-action">
+                        <div class="step-num">03</div>
+                        <div class="step-meta">
+                            <span class="step-badge step-badge-action">STAGE 3</span>
+                            <span class="step-title">RECOMMENDED INTERVENTION</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STAGE 2: DOMINANT RISK SCORE & PREDICTION EXPLANATION -->
+                <section class="stage-section dominant-score-section">
+                    <div class="stage-header">
+                        <span class="stage-pill stage-pill-risk">STAGE 2 · RISK SCORE &amp; LEVEL</span>
+                        <span class="stage-title">Quantified Dropout Risk Score &amp; Tier</span>
+                    </div>
+
+                    <div class="risk-score-overview-panel">
+                        <div class="risk-score-side">
+                            <span class="risk-score-kicker">QUANTIFIED RISK METRIC</span>
+                            <div class="risk-score-number font-mono" id="modalScoreLarge">--</div>
+                            <div class="risk-score-scale">out of 100 Risk Score</div>
+                            <div id="modalRiskBadgeLarge" class="risk-badge risk-high">HIGH RISK</div>
+                        </div>
+                        <div class="risk-meter-side">
+                            <div class="risk-meter-header">
+                                <span class="meter-title">Risk Scale Position</span>
+                                <span id="modalRiskPercentile" class="meter-percentile font-mono">--</span>
+                            </div>
+                            <div class="risk-gauge-track">
+                                <div id="modalRiskGaugeFill" class="risk-gauge-fill fill-high" style="width: 0%;"></div>
+                            </div>
+                            <div class="risk-gauge-ticks">
+                                <span>Low (0–39)</span>
+                                <span>Medium (40–69)</span>
+                                <span>High (70–100)</span>
+                            </div>
+                            <div class="primary-trigger-callout">
+                                <span class="trigger-badge">PRIMARY DETECTED SIGNAL</span>
+                                <span id="modalPrimaryTrigger" class="trigger-text">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Explanation Callout: "Why PRERAK flagged this student" -->
+                    <div class="rationale-box">
+                        <div class="rationale-header">
+                            <div class="rationale-tag-group">
+                                <span class="rationale-icon">🧠</span>
+                                <span class="rationale-label">PREDICTION EXPLANATION</span>
+                            </div>
+                            <span class="rationale-sub">Automated Root Cause Synthesis</span>
+                        </div>
+                        <div class="rationale-title">Why PRERAK flagged this student:</div>
+                        <p id="modalRationaleText" class="rationale-content">
+                            Loading root cause analysis...
+                        </p>
+                    </div>
+                </section>
+
+                <!-- STAGE 1: DETECTED SIGNALS Section -->
+                <section class="stage-section signals-stage-section">
+                    <div class="stage-header">
+                        <span class="stage-pill stage-pill-signal">STAGE 1 · DETECTED SIGNALS</span>
+                        <span class="stage-title">Multi-Velocity Academic &amp; Behavioral Indicators</span>
+                    </div>
+
+                    <!-- 4 Trend Cards Grid -->
+                    <div class="modal-trends-grid">
+                        <div class="trend-card">
+                            <div class="trend-card-top">
+                                <span class="trend-card-label">Attendance Velocity</span>
+                                <span class="trend-card-icon">📅</span>
+                            </div>
+                            <div class="trend-card-value font-mono" id="modalAttendanceTrend">--</div>
+                            <div class="trend-delta" id="modalAttendanceDelta">--</div>
+                        </div>
+                        <div class="trend-card">
+                            <div class="trend-card-top">
+                                <span class="trend-card-label">CGPA Trajectory</span>
+                                <span class="trend-card-icon">🎓</span>
+                            </div>
+                            <div class="trend-card-value font-mono" id="modalCgpaTrend">--</div>
+                            <div class="trend-delta" id="modalCgpaDelta">--</div>
+                        </div>
+                        <div class="trend-card">
+                            <div class="trend-card-top">
+                                <span class="trend-card-label">LMS Engagement Velocity</span>
+                                <span class="trend-card-icon">💻</span>
+                            </div>
+                            <div class="trend-card-value font-mono" id="modalEngagementTrend">--</div>
+                            <div class="trend-delta" id="modalEngagementDelta">--</div>
+                        </div>
+                        <div class="trend-card">
+                            <div class="trend-card-top">
+                                <span class="trend-card-label">Backlogs &amp; Assessment</span>
+                                <span class="trend-card-icon">📝</span>
+                            </div>
+                            <div class="trend-card-value font-mono" id="modalBacklogsAssess">--</div>
+                            <div class="trend-delta" id="modalFinancialStatus">--</div>
+                        </div>
+                    </div>
+
+                    <!-- Itemized Detected Warning Signals List -->
+                    <div class="subsection-label">Itemized Detected Warning Signals:</div>
+                    <ul id="modalSignalsList" class="signals-list">
+                        <li class="signal-item"><span class="loading-spinner"></span> Loading detected signals...</li>
+                    </ul>
+                </section>
+
+                <!-- STAGE 3: RECOMMENDED INTERVENTION Section -->
+                <section class="stage-section intervention-stage-section">
+                    <div class="stage-header">
+                        <span class="stage-pill stage-pill-action">STAGE 3 · RECOMMENDED INTERVENTION</span>
+                        <span class="stage-title">Targeted Retention Action Plan</span>
+                    </div>
+                    <p class="stage-description">Actionable, prioritized intervention steps formulated to reverse dropout velocity:</p>
+                    
+                    <div id="modalInterventionsList" class="interventions-list">
+                        <div class="intervention-pill">Loading recommended intervention...</div>
+                    </div>
+                </section>
+
+                <!-- INTERVENTION SIMULATOR Section (Intervention Lab) -->
+                <section class="stage-section simulator-section" id="intervention-lab">
+                    <div class="stage-header">
+                        <div class="sim-header-left">
+                            <span class="stage-pill stage-pill-sim">INTERVENTION LAB</span>
+                            <span class="stage-title">What-If Retention Impact Modeling</span>
+                        </div>
+                        <span class="sim-sandbox-badge">SANDBOX PROJECTION</span>
+                    </div>
+                    <p class="stage-description">
+                        Simulate the projected impact of targeted retention actions by modeling improvements across attendance, engagement, backlogs, and assessments (simulation only; actual student records remain unchanged):
+                    </p>
+
+                    <!-- Simulation Workflow Pipeline -->
+                    <div class="sim-flow-indicator">
+                        <div class="sim-flow-node">CURRENT BASELINE</div>
+                        <div class="sim-flow-sep">➔</div>
+                        <div class="sim-flow-node active-node">WHAT-IF PARAMETERS</div>
+                        <div class="sim-flow-sep">➔</div>
+                        <div class="sim-flow-node">PROJECTED OUTCOME</div>
+                    </div>
+
+                    <!-- Simulation Sliders Grid -->
+                    <div class="sim-controls-grid">
+                        <!-- Control 1: Attendance -->
+                        <div class="sim-control-group">
+                            <div class="sim-label-row">
+                                <label for="simAttendance" class="sim-label">Target Attendance %</label>
+                                <span class="sim-val-display font-mono" id="simAttendanceVal">--%</span>
+                            </div>
+                            <input type="range" id="simAttendance" class="sim-slider" min="0" max="100" step="1" oninput="updateSimDisplay('Attendance', this.value, '%')">
+                            <div class="sim-range-labels">
+                                <span>0%</span>
+                                <span class="sim-baseline-tag" id="simAttendanceBaseline">Current: --%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+
+                        <!-- Control 2: LMS Engagement -->
+                        <div class="sim-control-group">
+                            <div class="sim-label-row">
+                                <label for="simEngagement" class="sim-label">Target LMS Engagement %</label>
+                                <span class="sim-val-display font-mono" id="simEngagementVal">--%</span>
+                            </div>
+                            <input type="range" id="simEngagement" class="sim-slider" min="0" max="100" step="1" oninput="updateSimDisplay('Engagement', this.value, '%')">
+                            <div class="sim-range-labels">
+                                <span>0%</span>
+                                <span class="sim-baseline-tag" id="simEngagementBaseline">Current: --%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+
+                        <!-- Control 3: Course Backlogs -->
+                        <div class="sim-control-group">
+                            <div class="sim-label-row">
+                                <label for="simBacklogs" class="sim-label">Target Course Backlogs</label>
+                                <span class="sim-val-display font-mono" id="simBacklogsVal">--</span>
+                            </div>
+                            <input type="range" id="simBacklogs" class="sim-slider" min="0" max="5" step="1" oninput="updateSimDisplay('Backlogs', this.value, '')">
+                            <div class="sim-range-labels">
+                                <span>0 cleared</span>
+                                <span class="sim-baseline-tag" id="simBacklogsBaseline">Current: --</span>
+                                <span>5 backlogs</span>
+                            </div>
+                        </div>
+
+                        <!-- Control 4: Assessment Score -->
+                        <div class="sim-control-group">
+                            <div class="sim-label-row">
+                                <label for="simAssessment" class="sim-label">Assessment Score</label>
+                                <span class="sim-val-display font-mono" id="simAssessmentVal">-- / 100</span>
+                            </div>
+                            <input type="range" id="simAssessment" class="sim-slider" min="0" max="100" step="1" oninput="updateSimDisplay('Assessment', this.value, ' / 100')">
+                            <div class="sim-range-labels">
+                                <span>0</span>
+                                <span class="sim-baseline-tag" id="simAssessmentBaseline">Current: --</span>
+                                <span>100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulator Action Buttons -->
+                    <div class="sim-actions-row">
+                        <button type="button" class="sim-btn sim-btn-primary" id="btnSimulate" onclick="executeSimulation()">
+                            <span class="btn-icon">⚡</span> Simulate Impact
+                        </button>
+                        <button type="button" class="sim-btn sim-btn-secondary" id="btnResetSim" onclick="resetSimulationControls()">
+                            <span class="btn-icon">↺</span> Reset to Current
+                        </button>
+                    </div>
+
+                    <!-- Simulator Result Panel (Rendered dynamically via API) -->
+                    <div id="simResultPanel" class="sim-result-panel" style="display: none;">
+                        <div class="sim-disclaimer-banner">
+                            ⚠️ SIMULATION — NOT ACTUAL STUDENT DATA
+                        </div>
+
+                        <!-- Visual Before/After Comparison Grid -->
+                        <div class="sim-comparison-grid">
+                            <!-- Current Baseline Card -->
+                            <div class="sim-compare-card sim-baseline-card">
+                                <div class="sim-card-tag">CURRENT BASELINE</div>
+                                <div class="sim-score-value font-mono" id="simCurrentScore">--</div>
+                                <div class="sim-score-denom">/ 100 Risk Score</div>
+                                <div id="simCurrentLevelBadge" class="risk-badge risk-high">HIGH RISK</div>
+                            </div>
+
+                            <!-- Transition Arrow & Delta -->
+                            <div class="sim-transition-indicator">
+                                <div class="sim-arrow-symbol">➔</div>
+                                <div class="sim-delta-pill font-mono" id="simDeltaBadge">--</div>
+                            </div>
+
+                            <!-- Projected Outcome Card -->
+                            <div class="sim-compare-card sim-projected-card">
+                                <div class="sim-card-tag">PROJECTED OUTCOME</div>
+                                <div class="sim-score-value font-mono" id="simProjectedScore">--</div>
+                                <div class="sim-score-denom">/ 100 Risk Score</div>
+                                <div id="simProjectedLevelBadge" class="risk-badge risk-low">LOW RISK</div>
+                            </div>
+                        </div>
+
+                        <!-- Visual Progress Meter Comparison -->
+                        <div class="sim-meter-compare">
+                            <div class="sim-meter-row">
+                                <span class="sim-meter-name">Current:</span>
+                                <div class="sim-meter-track">
+                                    <div id="simMeterCurrentFill" class="sim-meter-fill fill-high" style="width: 0%;"></div>
+                                </div>
+                                <span id="simMeterCurrentVal" class="sim-meter-val font-mono">--</span>
+                            </div>
+                            <div class="sim-meter-row">
+                                <span class="sim-meter-name">Projected:</span>
+                                <div class="sim-meter-track">
+                                    <div id="simMeterProjectedFill" class="sim-meter-fill fill-low" style="width: 0%;"></div>
+                                </div>
+                                <span id="simMeterProjectedVal" class="sim-meter-val font-mono">--</span>
+                            </div>
+                        </div>
+
+                        <!-- Projected Outcome Narrative -->
+                        <div class="sim-narrative-box" id="simNarrativeBox"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Frontend Prediction & Simulation Client Script -->
+    <script>
+        // Track the currently active student record in memory for simulation baseline
+        let currentStudentProfile = null;
+        // In-memory cache of current cohort students for instant category drilldown
+        let cachedCohortStudents = [];
+
+        function escapeHtml(str) {
+            if (str == null) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // 1. Fetch /api/stats and /api/students to populate Risk Intelligence and Cohort Table
+        async function loadDashboardData() {
+            const tableBody = document.getElementById('studentsTableBody');
+            const statusLabel = document.getElementById('cohortStatusLabel');
+            const highCountEl = document.getElementById('highRiskCount');
+            const medCountEl = document.getElementById('medRiskCount');
+            const lowCountEl = document.getElementById('lowRiskCount');
+            
+            // Risk Intelligence section elements
+            const intelTotal = document.getElementById('intelTotalStudents');
+            const intelHigh = document.getElementById('intelHighRisk');
+            const intelAvg = document.getElementById('intelAvgScore');
+            const intelIntervention = document.getElementById('intelInterventionNeeded');
+            const errorBanner = document.getElementById('apiErrorBanner');
+
+            errorBanner.style.display = 'none';
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="table-state-cell">
+                        <span class="loading-spinner"></span> Loading cohort predictions from API...
+                    </td>
+                </tr>
+            `;
+
+            try {
+                const [statsRes, studentsRes] = await Promise.all([
+                    fetch('/api/stats'),
+                    fetch('/api/students')
+                ]);
+
+                if (!statsRes.ok) throw new Error(`HTTP ${statsRes.status} from /api/stats`);
+                if (!studentsRes.ok) throw new Error(`HTTP ${studentsRes.status} from /api/students`);
+
+                const stats = await statsRes.json();
+                const students = await studentsRes.json();
+                cachedCohortStudents = students; // Cache for category drilldowns
+
+                // Populate Summary Category Cards
+                highCountEl.textContent = stats.high ?? 0;
+                medCountEl.textContent = stats.medium ?? 0;
+                lowCountEl.textContent = stats.low ?? 0;
+                statusLabel.textContent = `Monitoring Active Cohort (${stats.total ?? students.length} Students)`;
+
+                // Populate Risk Intelligence Section
+                const totalStudents = stats.total ?? students.length;
+                const highRiskCount = stats.high ?? 0;
+                intelTotal.textContent = totalStudents;
+                intelHigh.textContent = highRiskCount;
+
+                if (students.length > 0) {
+                    const sumScores = students.reduce((acc, s) => acc + (Number(s.risk_score) || 0), 0);
+                    const avgScore = (sumScores / students.length).toFixed(1);
+                    intelAvg.textContent = `${avgScore} / 100`;
+                } else {
+                    intelAvg.textContent = '0 / 100';
+                }
+
+                const requiringIntervention = students.filter(s => {
+                    const r = (s.risk_level || '').toUpperCase();
+                    return r === 'HIGH' || r === 'MEDIUM';
+                }).length;
+                intelIntervention.textContent = `${requiringIntervention} Students`;
+
+                // Update Cohort Risk Overview Visual Insight
+                updateCohortDistribution(stats, students);
+
+                // Render student table rows with visual meter
+                renderStudentsTable(students);
+            } catch (err) {
+                console.error('Failed to load dashboard data:', err);
+                errorBanner.innerHTML = `<strong>API Connection Error:</strong> ${escapeHtml(err.message)}. Please verify Flask backend is active.`;
+                errorBanner.style.display = 'block';
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="table-state-cell table-error-text">
+                            ⚠️ Failed to load cohort data from API. Please verify backend is running on localhost:5000.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // 1b. Update Cohort Risk Overview Visual Insight
+        function updateCohortDistribution(stats, students) {
+            const total = stats.total ?? students.length;
+            const high = stats.high ?? students.filter(s => (s.risk_level || '').toUpperCase() === 'HIGH').length;
+            const med = stats.medium ?? students.filter(s => (s.risk_level || '').toUpperCase() === 'MEDIUM').length;
+            const low = stats.low ?? students.filter(s => (s.risk_level || '').toUpperCase() === 'LOW').length;
+
+            if (total > 0) {
+                const highPct = ((high / total) * 100).toFixed(1);
+                const medPct = ((med / total) * 100).toFixed(1);
+                const lowPct = ((low / total) * 100).toFixed(1);
+
+                // Update Segmented Bar Fill Widths and Tooltips
+                const segHigh = document.getElementById('segBarHigh');
+                const segMed = document.getElementById('segBarMed');
+                const segLow = document.getElementById('segBarLow');
+
+                if (segHigh) {
+                    segHigh.style.width = `${highPct}%`;
+                    segHigh.title = `High Risk: ${high} students (${highPct}%)`;
+                }
+                if (segMed) {
+                    segMed.style.width = `${medPct}%`;
+                    segMed.title = `Medium Risk: ${med} students (${medPct}%)`;
+                }
+                if (segLow) {
+                    segLow.style.width = `${lowPct}%`;
+                    segLow.title = `Low Risk: ${low} students (${lowPct}%)`;
+                }
+
+                // Update Category Legend Values
+                const distHighVal = document.getElementById('distHighVal');
+                const distMedVal = document.getElementById('distMedVal');
+                const distLowVal = document.getElementById('distLowVal');
+
+                if (distHighVal) distHighVal.textContent = `${high} (${highPct}%)`;
+                if (distMedVal) distMedVal.textContent = `${med} (${medPct}%)`;
+                if (distLowVal) distLowVal.textContent = `${low} (${lowPct}%)`;
+
+                // Update Dynamic Insight Line (e.g. "9 of 18 students currently require intervention.")
+                const reqCount = high + med;
+                const insightText = document.getElementById('distributionInsightText');
+                if (insightText) {
+                    insightText.textContent = `${reqCount} of ${total} students currently require intervention.`;
+                }
+            }
+        }
+
+        // 1c. Open Risk Category Drilldown Modal
+        async function openCategoryModal(category) {
+            const modal = document.getElementById('categoryModal');
+            const titleEl = document.getElementById('categoryModalTitle');
+            const subEl = document.getElementById('categoryModalSubtitle');
+            const kickerEl = document.getElementById('categoryKickerBadge');
+            const countEl = document.getElementById('categoryCountBadge');
+            const listEl = document.getElementById('categoryStudentsList');
+
+            if (!modal) return;
+
+            // Fetch from API if cached data is not yet available
+            if (!cachedCohortStudents || cachedCohortStudents.length === 0) {
+                listEl.innerHTML = '<div class="category-empty-state"><span class="loading-spinner"></span> Loading cohort data from API...</div>';
+                try {
+                    const res = await fetch('/api/students');
+                    if (res.ok) {
+                        cachedCohortStudents = await res.json();
+                    }
+                } catch (e) {
+                    console.error('Failed to load students for category drilldown:', e);
+                }
+            }
+
+            const catUpper = (category || 'HIGH').toUpperCase();
+            const filtered = (cachedCohortStudents || []).filter(s => (s.risk_level || '').toUpperCase() === catUpper);
+
+            // Set contextual header info
+            kickerEl.textContent = `RISK CATEGORY DRILLDOWN · ${catUpper}`;
+            kickerEl.className = `category-kicker-badge kicker-${catUpper.toLowerCase()}`;
+            countEl.textContent = `${filtered.length} ${filtered.length === 1 ? 'Student' : 'Students'}`;
+
+            if (catUpper === 'HIGH') {
+                titleEl.textContent = 'HIGH-RISK STUDENTS';
+                subEl.textContent = `${filtered.length} students currently require immediate attention (Score 70–100)`;
+            } else if (catUpper === 'MEDIUM') {
+                titleEl.textContent = 'MEDIUM-RISK STUDENTS';
+                subEl.textContent = `${filtered.length} students currently require proactive check-in (Score 40–69)`;
+            } else {
+                titleEl.textContent = 'LOW-RISK STUDENTS';
+                subEl.textContent = `${filtered.length} students currently maintaining stable parameters (Score 0–39)`;
+            }
+
+            // Render list of students
+            if (filtered.length === 0) {
+                listEl.innerHTML = `<div class="category-empty-state">No students found in ${escapeHtml(catUpper)} risk category.</div>`;
+            } else {
+                listEl.innerHTML = filtered.map(s => {
+                    const riskClass = (s.risk_level || 'low').toLowerCase();
+                    const scoreVal = Math.min(100, Math.max(0, Number(s.risk_score) || 0));
+                    const meterWidth = Math.max(scoreVal, 4);
+
+                    return `
+                        <div class="category-student-item row-${riskClass}" onclick="drilldownToStudent('${escapeHtml(s.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();drilldownToStudent('${escapeHtml(s.id)}');}" tabindex="0" role="button" aria-label="Open intelligence profile for ${escapeHtml(s.name)}">
+                            <div class="cat-student-info">
+                                <div class="cat-student-meta">
+                                    <span class="cat-student-id font-mono">${escapeHtml(s.id)}</span>
+                                    <span class="cat-student-dept">${escapeHtml(s.department)}</span>
+                                </div>
+                                <div class="cat-student-name">${escapeHtml(s.name)}</div>
+                                <div class="cat-student-signal">
+                                    <span class="cat-signal-dot dot-${riskClass}"></span>
+                                    <span class="cat-signal-text">${escapeHtml(s.primary_indicator || 'Metrics within healthy parameters')}</span>
+                                </div>
+                            </div>
+                            <div class="cat-student-action-col">
+                                <div class="cat-score-row">
+                                    <span class="cat-score-number font-mono score-${riskClass}">${scoreVal}</span>
+                                    <span class="cat-score-scale">/100</span>
+                                    <span class="risk-badge risk-${riskClass}">${escapeHtml(s.risk_level)}</span>
+                                </div>
+                                <div class="cat-meter-track">
+                                    <div class="cat-meter-fill fill-${riskClass}" style="width: ${meterWidth}%;"></div>
+                                </div>
+                                <span class="cat-inspect-prompt">Inspect Profile ➔</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCategoryModal() {
+            const modal = document.getElementById('categoryModal');
+            if (modal) {
+                modal.classList.remove('active');
+                const studentModal = document.getElementById('studentModal');
+                if (!studentModal || !studentModal.classList.contains('active')) {
+                    document.body.style.overflow = '';
+                }
+            }
+        }
+
+        function handleCategoryBackdropClick(event) {
+            if (event.target.id === 'categoryModal') {
+                closeCategoryModal();
+            }
+        }
+
+        // Transition from category list to student intelligence profile
+        function drilldownToStudent(studentId) {
+            closeCategoryModal();
+            openStudentModal(studentId);
+        }
+
+        // 2. Render table with visual risk-score indicators (0-100 meter)
+        function renderStudentsTable(students) {
+            const tbody = document.getElementById('studentsTableBody');
+            if (!students || students.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="table-state-cell">No students found in cohort.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = students.map(s => {
+                const riskLevel = (s.risk_level || 'LOW').toUpperCase();
+                const riskClass = riskLevel.toLowerCase();
+                const cgpaVal = typeof s.cgpa === 'number' ? s.cgpa.toFixed(2) : s.cgpa;
+                const scoreVal = Math.min(100, Math.max(0, Number(s.risk_score) || 0));
+                const meterWidth = Math.max(scoreVal, 4);
+
+                return `
+                    <tr class="student-row row-${riskClass}" onclick="openStudentModal('${escapeHtml(s.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openStudentModal('${escapeHtml(s.id)}');}" tabindex="0" role="button" aria-label="Inspect ${escapeHtml(s.name)}">
+                        <td class="mono-id"><span class="id-tag">${escapeHtml(s.id)}</span></td>
+                        <td class="student-name">
+                            <div class="name-cell">
+                                <span class="name-text">${escapeHtml(s.name)}</span>
+                                <span class="view-chip">Inspect ↗</span>
+                            </div>
+                        </td>
+                        <td class="dept-name">${escapeHtml(s.department)}</td>
+                        <td><span class="metric-chip">${s.attendance}%</span></td>
+                        <td><span class="metric-chip">${cgpaVal}</span></td>
+                        <td>
+                            <div class="score-indicator-container">
+                                <div class="score-indicator-label">
+                                    <span class="score-bold score-${riskClass}">${scoreVal}</span>
+                                    <span class="score-denom">/100</span>
+                                </div>
+                                <div class="score-progress-track">
+                                    <div class="score-progress-fill fill-${riskClass}" style="width: ${meterWidth}%;"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="risk-badge risk-${riskClass}">${riskLevel}</span></td>
+                        <td class="indicator-text">${escapeHtml(s.primary_indicator || 'Metrics within healthy parameters')}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 3. Open student modal with 3-Stage Prediction Workflow and Intervention Simulator
+        async function openStudentModal(id) {
+            const modal = document.getElementById('studentModal');
+            const nameEl = document.getElementById('modalStudentName');
+            const idEl = document.getElementById('modalStudentId');
+            const deptEl = document.getElementById('modalDepartment');
+            const badgeEl = document.getElementById('modalRiskBadge');
+            const levelEl = document.getElementById('modalRiskLevel');
+            const scoreEl = document.getElementById('modalRiskScore');
+            
+            // Workflow elements
+            const rationaleEl = document.getElementById('modalRationaleText');
+            const scoreLargeEl = document.getElementById('modalScoreLarge');
+            const badgeLargeEl = document.getElementById('modalRiskBadgeLarge');
+            const gaugeFillEl = document.getElementById('modalRiskGaugeFill');
+            const percentileEl = document.getElementById('modalRiskPercentile');
+            const triggerEl = document.getElementById('modalPrimaryTrigger');
+
+            // Trend elements
+            const attTrendEl = document.getElementById('modalAttendanceTrend');
+            const attDeltaEl = document.getElementById('modalAttendanceDelta');
+            const cgpaTrendEl = document.getElementById('modalCgpaTrend');
+            const cgpaDeltaEl = document.getElementById('modalCgpaDelta');
+            const engTrendEl = document.getElementById('modalEngagementTrend');
+            const engDeltaEl = document.getElementById('modalEngagementDelta');
+            const backlogsEl = document.getElementById('modalBacklogsAssess');
+            const finEl = document.getElementById('modalFinancialStatus');
+            const signalsList = document.getElementById('modalSignalsList');
+            const interventionsList = document.getElementById('modalInterventionsList');
+            const errorEl = document.getElementById('modalError');
+
+            // Open modal and show loading states
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            errorEl.style.display = 'none';
+
+            const modalCard = modal.querySelector('.modal-card');
+            if (modalCard) modalCard.scrollTop = 0;
+
+            idEl.textContent = id;
+            deptEl.textContent = 'Loading department...';
+            nameEl.textContent = 'Loading student profile...';
+            badgeEl.className = 'risk-badge risk-low';
+            levelEl.textContent = 'LOADING...';
+            scoreEl.textContent = '-- / 100';
+
+            rationaleEl.innerHTML = '<span class="loading-spinner"></span> Synthesizing root-cause prediction rationale...';
+            scoreLargeEl.textContent = '--';
+            badgeLargeEl.className = 'risk-badge risk-low';
+            badgeLargeEl.textContent = 'EVALUATING';
+            gaugeFillEl.style.width = '0%';
+            percentileEl.textContent = 'Analyzing...';
+            triggerEl.textContent = 'Identifying primary detected signal...';
+
+            attTrendEl.textContent = 'Loading...';
+            attDeltaEl.textContent = '--';
+            cgpaTrendEl.textContent = 'Loading...';
+            cgpaDeltaEl.textContent = '--';
+            engTrendEl.textContent = 'Loading...';
+            engDeltaEl.textContent = '--';
+            backlogsEl.textContent = 'Loading...';
+            finEl.textContent = '--';
+
+            signalsList.innerHTML = '<li class="signal-item"><span class="loading-spinner"></span> Loading detected signals from API...</li>';
+            interventionsList.innerHTML = '<div class="intervention-pill"><span class="loading-spinner"></span> Loading recommended intervention...</div>';
+
+            // Hide previous simulation results while loading new student
+            document.getElementById('simResultPanel').style.display = 'none';
+
+            try {
+                const res = await fetch('/api/students/' + encodeURIComponent(id));
+                if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                const s = await res.json();
+                currentStudentProfile = s; // Persist for simulator
+
+                // Top Header info
+                idEl.textContent = s.id;
+                deptEl.textContent = s.department;
+                nameEl.textContent = s.name;
+
+                const riskLevel = (s.risk_level || 'LOW').toUpperCase();
+                const riskClass = riskLevel.toLowerCase();
+                badgeEl.className = 'risk-badge risk-' + riskClass;
+                levelEl.textContent = riskLevel + ' RISK';
+                scoreEl.textContent = s.risk_score + ' / 100';
+
+                // "Why PRERAK flagged this student" prominent explanation using consistent terminology
+                if (riskLevel === 'HIGH') {
+                    rationaleEl.innerHTML = `
+                        PRERAK assigned <strong>${escapeHtml(s.name)}</strong> a <strong>Risk Score of ${s.risk_score}/100 (Risk Level: HIGH)</strong> due to compounded negative velocity across attendance and academics. 
+                        Attendance dropped by <strong>${Math.abs(s.att_diff)}%</strong> (currently ${s.attendance}%), accompanied by <strong>${s.backlogs} active course backlog(s)</strong> and 
+                        ${s.financial_flag ? 'an <strong>overdue fee installment hold</strong>.' : 'internal test scores below passing standards.'} 
+                        Prompt recommended intervention is advised to reverse academic attrition.
+                    `;
+                } else if (riskLevel === 'MEDIUM') {
+                    rationaleEl.innerHTML = `
+                        PRERAK assigned <strong>${escapeHtml(s.name)}</strong> a <strong>Risk Score of ${s.risk_score}/100 (Risk Level: MEDIUM)</strong>. 
+                        Early warning signals detected: attendance decreased to <strong>${s.attendance}%</strong> with assessment scores at <strong>${s.assessment_score}/100</strong>. 
+                        ${s.financial_flag ? 'A financial hold is also noted. ' : ''}
+                        Proactive recommended intervention is advised before academic recovery becomes critical.
+                    `;
+                } else {
+                    rationaleEl.innerHTML = `
+                        PRERAK assigned <strong>${escapeHtml(s.name)}</strong> a <strong>Risk Score of ${s.risk_score}/100 (Risk Level: LOW)</strong>. 
+                        All academic, attendance, and LMS engagement velocity metrics remain within healthy benchmark thresholds (<strong>${s.attendance}%</strong> attendance, <strong>${Number(s.cgpa).toFixed(2)}</strong> CGPA, 0 backlogs). 
+                        Standard academic progress monitoring is recommended.
+                    `;
+                }
+
+                // Stage 2: Risk Score & Level Overview
+                scoreLargeEl.textContent = s.risk_score;
+                badgeLargeEl.className = 'risk-badge risk-' + riskClass;
+                badgeLargeEl.textContent = riskLevel + ' RISK';
+                gaugeFillEl.className = 'risk-gauge-fill fill-' + riskClass;
+                gaugeFillEl.style.width = Math.max(s.risk_score, 5) + '%';
+                percentileEl.textContent = `Risk Score: ${s.risk_score} / 100`;
+                triggerEl.textContent = s.primary_indicator || 'Metrics within healthy parameters';
+
+                // Stage 1: Trends
+                attTrendEl.textContent = s.attendance_trend || `${s.attendance}%`;
+                if (s.att_diff < 0) {
+                    attDeltaEl.textContent = '📉 ' + s.att_diff + '% drop';
+                    attDeltaEl.className = 'trend-delta delta-negative';
+                } else {
+                    attDeltaEl.textContent = '✅ Stable (' + (s.att_diff > 0 ? '+' + s.att_diff : '0') + '%)';
+                    attDeltaEl.className = 'trend-delta delta-positive';
+                }
+
+                cgpaTrendEl.textContent = s.cgpa_trend || s.cgpa;
+                if (s.cgpa_diff < 0) {
+                    cgpaDeltaEl.textContent = '📉 ' + s.cgpa_diff.toFixed(2) + ' change';
+                    cgpaDeltaEl.className = 'trend-delta delta-negative';
+                } else {
+                    const diffStr = typeof s.cgpa_diff === 'number' ? s.cgpa_diff.toFixed(2) : s.cgpa_diff;
+                    cgpaDeltaEl.textContent = '✅ Steady (+' + diffStr + ')';
+                    cgpaDeltaEl.className = 'trend-delta delta-positive';
+                }
+
+                engTrendEl.textContent = s.engagement_trend || `${s.engagement}%`;
+                if (s.eng_diff < 0) {
+                    engDeltaEl.textContent = '📉 ' + s.eng_diff + '% LMS activity';
+                    engDeltaEl.className = 'trend-delta delta-negative';
+                } else {
+                    engDeltaEl.textContent = '✅ Active (' + (s.eng_diff > 0 ? '+' + s.eng_diff : '0') + '%)';
+                    engDeltaEl.className = 'trend-delta delta-positive';
+                }
+
+                backlogsEl.textContent = (s.backlogs > 0 ? s.backlogs + ' Backlog(s)' : '0 Backlogs') + ' • Test: ' + s.assessment_score + '/100';
+
+                if (s.financial_flag) {
+                    finEl.textContent = '⚠️ Fee installment overdue';
+                    finEl.className = 'trend-delta delta-negative';
+                } else {
+                    finEl.textContent = '✅ Financial status clear';
+                    finEl.className = 'trend-delta delta-positive';
+                }
+
+                // Stage 1: Itemized Detected Signals
+                signalsList.innerHTML = '';
+                (s.signals || []).forEach(sig => {
+                    const li = document.createElement('li');
+                    li.className = 'signal-item';
+                    li.innerHTML = `
+                        <span class="signal-tag-pill">DETECTED SIGNAL</span>
+                        <span class="signal-text">${escapeHtml(sig)}</span>
+                    `;
+                    signalsList.appendChild(li);
+                });
+
+                // Stage 3: Recommended Intervention Plan
+                interventionsList.innerHTML = '';
+                (s.interventions || []).forEach((rec, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'action-plan-card';
+                    div.innerHTML = `
+                        <div class="action-card-header">
+                            <span class="action-step-num">ACTION 0${idx + 1}</span>
+                            <span class="action-type-tag">RECOMMENDED INTERVENTION</span>
+                        </div>
+                        <div class="action-card-title">
+                            <span class="action-icon">🎯</span>
+                            <span>${escapeHtml(rec)}</span>
+                        </div>
+                    `;
+                    interventionsList.appendChild(div);
+                });
+
+                // Initialize Intervention Simulator with current student's baseline values
+                initSimulatorControls(s);
+            } catch (err) {
+                console.error('Failed to load student details:', err);
+                errorEl.innerHTML = `<strong>Failed to retrieve student profile:</strong> ${escapeHtml(err.message)}`;
+                errorEl.style.display = 'block';
+                nameEl.textContent = 'Profile Load Error';
+            }
+        }
+
+        // --- Intervention Simulator Controls Logic ---
+
+        function initSimulatorControls(s) {
+            // Set slider values to current baseline
+            document.getElementById('simAttendance').value = s.attendance;
+            document.getElementById('simEngagement').value = s.engagement;
+            document.getElementById('simBacklogs').value = s.backlogs;
+            document.getElementById('simAssessment').value = s.assessment_score;
+
+            // Set current baseline reference labels
+            document.getElementById('simAttendanceBaseline').textContent = `Current: ${s.attendance}%`;
+            document.getElementById('simEngagementBaseline').textContent = `Current: ${s.engagement}%`;
+            document.getElementById('simBacklogsBaseline').textContent = `Current: ${s.backlogs} ${Number(s.backlogs) === 1 ? 'backlog' : 'backlogs'}`;
+            document.getElementById('simAssessmentBaseline').textContent = `Current: ${s.assessment_score}`;
+
+            // Set display values
+            updateSimDisplay('Attendance', s.attendance, '%');
+            updateSimDisplay('Engagement', s.engagement, '%');
+            updateSimDisplay('Backlogs', s.backlogs, '');
+            updateSimDisplay('Assessment', s.assessment_score, ' / 100');
+
+            // Hide previous results
+            document.getElementById('simResultPanel').style.display = 'none';
+        }
+
+        function updateSimDisplay(field, val, suffix) {
+            const el = document.getElementById('sim' + field + 'Val');
+            if (el) {
+                if (field === 'Backlogs') {
+                    const num = Number(val) || 0;
+                    el.textContent = `${num} ${num === 1 ? 'Backlog' : 'Backlogs'}`;
+                } else {
+                    el.textContent = val + suffix;
+                }
+            }
+        }
+
+        function resetSimulationControls() {
+            if (!currentStudentProfile) return;
+            initSimulatorControls(currentStudentProfile);
+        }
+
+        async function executeSimulation() {
+            if (!currentStudentProfile) return;
+
+            const btn = document.getElementById('btnSimulate');
+            const origBtnText = btn.innerHTML;
+            btn.innerHTML = '<span class="loading-spinner"></span> Simulating...';
+            btn.disabled = true;
+
+            const simAttendance = Number(document.getElementById('simAttendance').value);
+            const simEngagement = Number(document.getElementById('simEngagement').value);
+            const simBacklogs = Number(document.getElementById('simBacklogs').value);
+            const simAssessment = Number(document.getElementById('simAssessment').value);
+
+            const payload = {
+                attendance: simAttendance,
+                engagement: simEngagement,
+                backlogs: simBacklogs,
+                assessment_score: simAssessment
+            };
+
+            try {
+                const res = await fetch(`/api/students/${encodeURIComponent(currentStudentProfile.id)}/simulate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    throw new Error(errData.message || `HTTP ${res.status}`);
+                }
+
+                const simResult = await res.json();
+                renderSimulationResult(simResult);
+            } catch (err) {
+                console.error('Simulation error:', err);
+                alert('Simulation error: ' + err.message);
+            } finally {
+                btn.innerHTML = origBtnText;
+                btn.disabled = false;
+            }
+        }
+
+        function renderSimulationResult(data) {
+            const panel = document.getElementById('simResultPanel');
+            panel.style.display = 'block';
+
+            // Current Baseline
+            document.getElementById('simCurrentScore').textContent = data.current_risk_score;
+            const curBadge = document.getElementById('simCurrentLevelBadge');
+            curBadge.className = 'risk-badge risk-' + data.current_risk_level.toLowerCase();
+            curBadge.textContent = data.current_risk_level + ' RISK';
+
+            // Projected Outcome
+            document.getElementById('simProjectedScore').textContent = data.projected_risk_score;
+            const projBadge = document.getElementById('simProjectedLevelBadge');
+            projBadge.className = 'risk-badge risk-' + data.projected_risk_level.toLowerCase();
+            projBadge.textContent = data.projected_risk_level + ' RISK';
+
+            // Delta
+            const diff = data.score_difference;
+            const deltaBadge = document.getElementById('simDeltaBadge');
+            if (diff < 0) {
+                deltaBadge.textContent = `${diff} points`;
+                deltaBadge.className = 'sim-delta-pill delta-improvement';
+            } else if (diff > 0) {
+                deltaBadge.textContent = `+${diff} points`;
+                deltaBadge.className = 'sim-delta-pill delta-deterioration';
+            } else {
+                deltaBadge.textContent = 'No change (0 pts)';
+                deltaBadge.className = 'sim-delta-pill delta-neutral';
+            }
+
+            // Visual Progress Meters
+            const curMeter = document.getElementById('simMeterCurrentFill');
+            curMeter.className = 'sim-meter-fill fill-' + data.current_risk_level.toLowerCase();
+            curMeter.style.width = Math.max(data.current_risk_score, 4) + '%';
+            document.getElementById('simMeterCurrentVal').textContent = `${data.current_risk_score}/100`;
+
+            const projMeter = document.getElementById('simMeterProjectedFill');
+            projMeter.className = 'sim-meter-fill fill-' + data.projected_risk_level.toLowerCase();
+            projMeter.style.width = Math.max(data.projected_risk_score, 4) + '%';
+            document.getElementById('simMeterProjectedVal').textContent = `${data.projected_risk_score}/100`;
+
+            // Narrative summary
+            const narrativeEl = document.getElementById('simNarrativeBox');
+            const diffText = diff < 0 ? `${diff} points` : (diff > 0 ? `+${diff} points` : `0 points`);
+            narrativeEl.innerHTML = `
+                <strong>Simulation Summary:</strong> Current: <strong>${data.current_risk_score} (${data.current_risk_level})</strong> ➔ 
+                Projected: <strong>${data.projected_risk_score} (${data.projected_risk_level})</strong> | 
+                Impact: <strong>${diffText}</strong>. 
+                ${diff < 0 
+                    ? `Simulated interventions successfully reduced the student's Risk Score by ${Math.abs(diff)} points, transitioning their tier from ${data.current_risk_level} to ${data.projected_risk_level}.` 
+                    : (diff > 0 ? `Simulated parameters indicate increased retention risk (+${diff} points).` : `Simulated parameters yield no net shift in the calculated Risk Score.`)}
+            `;
+
+            // Smooth scroll to simulation outcome
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function closeStudentModal() {
+            document.getElementById('studentModal').classList.remove('active');
+            // Only reset overflow if category modal is not open
+            const categoryModal = document.getElementById('categoryModal');
+            if (!categoryModal || !categoryModal.classList.contains('active')) {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function handleBackdropClick(event) {
+            if (event.target.id === 'studentModal') {
+                closeStudentModal();
+            }
+        }
+
+        // Global keyboard shortcuts (Escape key closes top-most active modal)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const studentModal = document.getElementById('studentModal');
+                const categoryModal = document.getElementById('categoryModal');
+                if (studentModal && studentModal.classList.contains('active')) {
+                    closeStudentModal();
+                } else if (categoryModal && categoryModal.classList.contains('active')) {
+                    closeCategoryModal();
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', loadDashboardData);
+    </script>
+</body>
+</html>
